@@ -21,6 +21,7 @@ struct SafariViewPresentationModifier: ViewModifier {
     }
     
     func body(content: Content) -> some View {
+      if let item = item {
         content.background(
             SafariViewPresenter(
                 item: item,
@@ -28,6 +29,9 @@ struct SafariViewPresentationModifier: ViewModifier {
                 representationBuilder: itemRepresentationBuilder
             )
         )
+      } else {
+        content
+      }
     }
 }
 
@@ -38,13 +42,17 @@ struct ItemSafariViewPresentationModifier<Item: Identifiable>: ViewModifier {
     var representationBuilder: (Item) -> SafariView
     
     func body(content: Content) -> some View {
+      if let item = item {
         content.background(
             SafariViewPresenter(
-                item: $item,
+                item: item,
                 onDismiss: onDismiss,
                 representationBuilder: representationBuilder
             )
         )
+      } else {
+        content
+      }
     }
 }
 
